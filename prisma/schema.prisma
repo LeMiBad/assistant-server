@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String             @id
+  email         String             @unique
+  password      String
+  is_confirmed  Boolean            @default(false)
+  permits       String[]
+  assistants    AssistantSetting[]
+  notifications Notification[]
+  chats         Chats[]
+  assistant_id  String?            @unique
+  tg_token      String?
+  tg            String?
+  created_at    DateTime
+  Popup         Popup[]
+}
+
+model AssistantSetting {
+  id            String   @id
+  created_at    DateTime
+  name          String
+  role          String
+  org_info      String
+  answer_length Int
+  strategy      String
+  target        String
+  model         String
+  user_id       String
+  faq           Json
+  user          User     @relation(fields: [user_id], references: [id])
+  files         Files[]
+}
+
+model Chats {
+  id               String   @id
+  created_at       DateTime
+  chat_history     Json[]
+  target           Json[]
+  user_info        Json[]
+  integration_type String
+  User             User?    @relation(fields: [user_id], references: [id])
+  user_id          String?
+  assistant_id     String
+  is_blocked       Boolean
+}
+
+model Popup {
+  id       String @id
+  user_id  String
+  settings Json
+  user     User   @relation(fields: [user_id], references: [id])
+}
+
+model Notification {
+  id          String   @id
+  created_at  DateTime
+  title       String
+  status      String
+  archived    Boolean  @default(false)
+  description String
+  insert_data Json
+  user_id     String
+  thread_id   String
+  user        User     @relation(fields: [user_id], references: [id])
+}
+
+model Files {
+  id           String            @id
+  created_at   DateTime
+  name         String
+  assistant_id String?
+  assistant    AssistantSetting? @relation(fields: [assistant_id], references: [id])
+}
