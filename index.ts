@@ -4,6 +4,7 @@ import logger from "morgan";
 import cors from "cors";
 import createError from "http-errors";
 import routes from "./src/routes/routes";
+import { sendToBot } from "./src/utils/sendToBot";
 
 const app = express();
 
@@ -31,6 +32,26 @@ app.use(
   ) => {
     res.locals.message = err.message;
     res.locals.error = req.app.get("env") === "development" ? err : {};
+
+    const errorInfo = {
+      message: err?.message,
+      stack: err?.stack,
+      method: req?.method,
+      url: req?.originalUrl,
+      headers: req?.headers,
+      ip: req?.ip,
+      user: (req as any)?.user,
+    };
+
+    const errorInfoLines = Object.entries(errorInfo).map(
+      ([key, value]) => `${key}: ${JSON.stringify(value, null, 2)}`,
+    );
+
+    const formattedMessage = `*Error Occurred:*\n\n${errorInfoLines.join(
+      "\n\n",
+    )}`;
+
+    sendToBot(formattedMessage);
     res.status(err.status || 500);
     res.json({ error: err.message });
   },

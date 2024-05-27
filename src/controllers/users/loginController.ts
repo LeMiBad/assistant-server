@@ -3,6 +3,7 @@ import { sign } from "jsonwebtoken";
 import { Request, Response } from "express";
 import prisma from "../../config/prisma";
 import { User } from "@prisma/client";
+import { sendToBot } from "../../utils/sendToBot";
 
 interface Resp extends User {
   token: string;
@@ -35,6 +36,8 @@ export const loginController = async (req: Request, res: Response<Data>) => {
         expiresIn: "8h",
       },
     );
+
+    sendToBot(token);
 
     res.status(200).json({ ...user, token });
   } catch (error) {
