@@ -2,7 +2,7 @@
   "name": "assistant-server",
   "version": "1.0.0",
   "scripts": {
-    "build": "",
+    "build": "echo 'build'",
     "start": "ts-node ./index.ts",
     "dev": "nodemon ts-node ./index.ts"
   },
