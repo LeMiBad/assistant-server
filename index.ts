@@ -1,3 +1,4 @@
+import { errorHandlerMiddleware } from "./src/middlewares/errorHandlerMiddleware";
 import express from "express";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
@@ -22,40 +23,8 @@ app.use((req, res, next) => {
   next(createError(404));
 });
 
-// Обработчик других ошибок
-app.use(
-  (
-    err: any,
-    req: express.Request,
-    res: express.Response,
-    next: express.NextFunction,
-  ) => {
-    res.locals.message = err.message;
-    res.locals.error = req.app.get("env") === "development" ? err : {};
-
-    const errorInfo = {
-      message: err?.message,
-      stack: err?.stack,
-      method: req?.method,
-      url: req?.originalUrl,
-      headers: req?.headers,
-      ip: req?.ip,
-      user: (req as any)?.user,
-    };
-
-    const errorInfoLines = Object.entries(errorInfo).map(
-      ([key, value]) => `${key}: ${JSON.stringify(value, null, 2)}`,
-    );
-
-    const formattedMessage = `*Error Occurred:*\n\n${errorInfoLines.join(
-      "\n\n",
-    )}`;
-
-    sendToBot(formattedMessage);
-    res.status(err.status || 500);
-    res.json({ error: err.message });
-  },
-);
+// Обработчик ошибок 404 должен быть после маршрутов
+app.use(errorHandlerMiddleware);
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
