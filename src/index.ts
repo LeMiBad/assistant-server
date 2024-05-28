@@ -1,7 +1,7 @@
 import express from "express";
 import logger from "morgan";
 import cors from "cors";
-import routes from "./src/routes/routes";
+import routes from "./routes/routes";
 
 const app = express();
 
@@ -16,6 +16,6 @@ app.use("/api", routes);
 // Обработчик ошибок 404 должен быть после маршрутов
 // app.use(errorHandlerMiddleware);
 
-app.listen(80, () => console.log("Server is running on port 80"));
+app.listen(3000, () => console.log("Server is running on port 80"));
 
 export default app;
