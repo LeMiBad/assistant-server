@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "pm2 start ./index.ts --name assistant-server --watch --interpreter ./node_modules/.bin/ts-node",
+    "start": "ts-node ./index.ts",
     "dev": "nodemon ts-node ./index.ts"
   },
   "dependencies": {
