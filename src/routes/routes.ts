@@ -6,6 +6,7 @@ import {
   loginController,
   unsetTgTokenController,
   setTgTokenController,
+  getTgTokens,
 } from "../controllers/users";
 
 import {
@@ -26,6 +27,7 @@ import {
   sendChatMessage,
   deleteChats,
   blockChat,
+  getChat,
 } from "../controllers/chats";
 
 import { getAllUsers, getAdminToken, updateUser } from "../controllers/admin";
@@ -33,8 +35,9 @@ import { getAllUsers, getAdminToken, updateUser } from "../controllers/admin";
 const router = Router();
 
 // Телеграмм токен
-router.use("/users/tg/setTgToken", setTgTokenController);
-router.use("/users/tg/unsetTgToken", unsetTgTokenController);
+router.post("/users/tg/setTgToken", authMiddleware, setTgTokenController);
+router.get("/users/tg/unsetTgToken", authMiddleware, unsetTgTokenController);
+router.post("/users/tgTokens", getTgTokens);
 router.post("/users/login", loginController);
 router.post("/users/signup", signupController);
 
@@ -52,9 +55,9 @@ router.get("/notifications", authMiddleware, getNotificationsController);
 router.delete("/notifications", authMiddleware, deleteNotificationsController);
 
 // Чаты
-router.get("/chats", authMiddleware, getChats);
+router.post("/chats", authMiddleware, getChats);
 router.delete("/chats", deleteChats);
-router.post("/chat", getChats);
+router.post("/chat", getChat);
 router.post("/chat/block", authMiddleware, blockChat);
 router.post("/chat/send", sendChatMessage);
 

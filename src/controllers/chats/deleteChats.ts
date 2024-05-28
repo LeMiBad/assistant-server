@@ -1,9 +1,13 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import prisma from "../../config/prisma";
 
 type Data = string[] | { message: string };
 
-export const deleteChats = async (req: Request, res: Response<Data>) => {
+export const deleteChats = async (
+  req: Request,
+  res: Response<Data>,
+  next: NextFunction,
+) => {
   try {
     const { ids } = req.body;
 
@@ -15,5 +19,6 @@ export const deleteChats = async (req: Request, res: Response<Data>) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Не удалось удалить чаты" });
+    next(error);
   }
 };

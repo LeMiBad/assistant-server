@@ -1,10 +1,14 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { Chats } from "@prisma/client";
 import prisma from "../../config/prisma";
 
 type Data = Chats[] | { message: string };
 
-export const getChats = async (req: Request, res: Response<Data>) => {
+export const getChats = async (
+  req: Request,
+  res: Response<Data>,
+  next: NextFunction,
+) => {
   try {
     const { assistant_id } = req.body;
 
@@ -20,5 +24,6 @@ export const getChats = async (req: Request, res: Response<Data>) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Не удалось получить чат" });
+    next(error);
   }
 };

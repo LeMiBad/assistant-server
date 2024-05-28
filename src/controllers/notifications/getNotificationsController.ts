@@ -10,11 +10,10 @@ export const getNotificationsController = async (
   res: Response<Data>,
 ) => {
   try {
-    const { config } = req.body;
     const { id } = (req as any).user;
 
     const notifications = await prisma.notification.findMany({
-      where: { user_id: id, ...config },
+      where: { user_id: id },
     });
 
     const oldNotifications = notifications
