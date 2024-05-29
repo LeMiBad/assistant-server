@@ -28,6 +28,7 @@ import {
   deleteChats,
   blockChat,
   getChat,
+  createChat
 } from "../controllers/chats";
 
 import { getAllUsers, getAdminToken, updateUser } from "../controllers/admin";
@@ -56,6 +57,7 @@ router.delete("/notifications", authMiddleware, deleteNotificationsController);
 
 // Чаты
 router.post("/chats", authMiddleware, getChats);
+router.post("/chat/create", createChat)
 router.delete("/chats", deleteChats);
 router.post("/chat", getChat);
 router.post("/chat/block", authMiddleware, blockChat);
