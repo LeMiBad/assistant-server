@@ -48,7 +48,7 @@ router.post("/assistant", authMiddleware, createAssistant);
 router.patch("/assistant", authMiddleware, updateAssistant);
 
 // Попап
-router.get("/popup", authMiddleware, getPopup);
+router.get("/popup", getPopup);
 router.post("/popup", authMiddleware, updatePopup);
 
 // Оповещения

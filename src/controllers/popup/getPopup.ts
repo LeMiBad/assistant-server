@@ -27,9 +27,10 @@ export const getPopup = async (req: Request, res: Response<Data>) => {
     const popup = await prisma.popup.findFirst({
       where: { user_id: id },
     });
-
+    console.log('GOOD')
     res.status(200).json(popup);
   } catch (error) {
+    console.log('ERROR')
     res.status(500).json({ message: "Не удалось получить настройки попапа" });
   }
 };
