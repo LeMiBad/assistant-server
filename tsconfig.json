@@ -9,6 +9,10 @@
       "outDir": "dist",
       "rootDir": "src"
     },
+<<<<<<< HEAD
     "include": ["src"]
+=======
+    "include": ["src", "index.ts"]
+>>>>>>> 5eb6d1a (fix)
   }
   
