@@ -16,6 +16,6 @@ app.use("/api", routes);
 // Обработчик ошибок 404 должен быть после маршрутов
 // app.use(errorHandlerMiddleware);
 
-app.listen(3000, () => console.log("Server is running on port 80"));
+app.listen(80, () => console.log("Server is running on port 80"));
 
 export default app;
