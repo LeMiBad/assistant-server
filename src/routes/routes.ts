@@ -32,6 +32,7 @@ import {
 } from "../controllers/chats";
 
 import { getAllUsers, getAdminToken, updateUser } from "../controllers/admin";
+import { getPopupSettings } from "../controllers/popup/getPopupSettings";
 
 const router = Router();
 
@@ -49,6 +50,7 @@ router.patch("/assistant", authMiddleware, updateAssistant);
 
 // Попап
 router.get("/popup", getPopup);
+router.get("/popup/settings", authMiddleware, getPopupSettings);
 router.post("/popup", authMiddleware, updatePopup);
 
 // Оповещения

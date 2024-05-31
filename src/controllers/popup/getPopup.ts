@@ -8,26 +8,19 @@ export const getPopup = async (req: Request, res: Response<Data>) => {
   try {
     const { popup_id } = req.query;
 
-    if (popup_id) {
-      const popup = await prisma.popup.findFirst({
-        where: { id: popup_id as string },
-      });
+    const popup = await prisma.popup.findFirst({
+      where: { id: popup_id as string },
+    });
+    
 
-      if (popup) {
-        const popupSettings = popup.settings as { code: string };
-        res.setHeader("Content-Type", "application/javascript");
-        return res.status(200).send(popupSettings.code);
-      } else {
-        return res.status(404).json({ message: "Попап не найден" });
-      }
+    if (popup) {
+      const popupSettings = popup.settings as { code: string };
+      res.setHeader("Content-Type", "application/javascript");
+      return res.status(200).send(popupSettings.code);
+    } else {
+      return res.status(404).json({ message: "Попап не найден" });
     }
 
-    const { id } = (req as any).user;
-
-    const popup = await prisma.popup.findFirst({
-      where: { user_id: id },
-    });
-    console.log('GOOD')
     res.status(200).json(popup);
   } catch (error) {
     console.log('ERROR')
