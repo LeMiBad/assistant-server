@@ -22,7 +22,7 @@ export const createChat = async (req: Request, res: Response<Data>) => {
 
     const newChatId = id ?? v4();
 
-    const chat = await prisma.chats.create({
+    const createChatArgs = {
       data: {
         id: newChatId,
         user_id: assistant?.user_id,
@@ -34,7 +34,15 @@ export const createChat = async (req: Request, res: Response<Data>) => {
         is_blocked: false,
         integration_type: integration_type ?? "browser",
       },
-    });
+    }
+
+    console.log(assistant.first_message, 555)
+    if(assistant.first_message) {
+      //@ts-expect-error
+      createChatArgs.data.chat_history = [{ role: 'CHATBOT', message: assistant.first_message}]
+    }
+
+    const chat = await prisma.chats.create(createChatArgs);
 
     res.status(200).json(chat);
   } catch (error) {

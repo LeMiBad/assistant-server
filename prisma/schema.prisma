@@ -29,7 +29,7 @@ model AssistantSetting {
   name          String
   role          String
   org_info      String
-  answer_length Int
+  first_message String?
   strategy      String
   target        String
   model         String
