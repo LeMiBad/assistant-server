@@ -7,10 +7,18 @@ type Data = Popup | null | { message: string };
 
 export const updatePopup = async (req: Request, res: Response<Data>) => {
   try {
-    const { popup_id, updates } = req.body;
+    const { updates } = req.body;
     const { id: user_id } = (req as any).user;
 
     let popup;
+
+    const createdPopup = await prisma.popup.findFirst({
+      where: {
+        user_id
+      }
+    })
+
+    const popup_id = createdPopup?.id
 
     if (!popup_id) {
       popup = await prisma.popup.create({
