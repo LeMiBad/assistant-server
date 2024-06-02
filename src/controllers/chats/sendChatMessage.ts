@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { Chats } from "@prisma/client";
 import prisma from "../../config/prisma";
 import { cohereSendMessage } from "../../services/cohere/cohere";
+import { TgApi } from "../../services/tgApi/tgApi";
 
 type Data = Chats | { message: string };
 
@@ -16,6 +17,12 @@ export const sendChatMessage = async (req: Request, res: Response<Data>) => {
       },
     });
 
+    const user = await prisma.user.findFirst({
+      where: {
+        id: chat?.user_id ?? ''
+      }
+    })
+
     if (!chat) {
       return res.status(404).json({ message: "Чат не найден" });
     }
@@ -29,6 +36,9 @@ export const sendChatMessage = async (req: Request, res: Response<Data>) => {
           chat_history: [...(chat.chat_history as any), message],
         },
       });
+
+      await TgApi.send({ chat_id, content: message.message, bot_id: user?.tg_token ?? "" })
+
     } else {
       updatedChat = await cohereSendMessage({ ...chat, message });
     }
