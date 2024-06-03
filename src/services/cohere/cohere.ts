@@ -8,7 +8,7 @@ import { MessageItem, Role } from "../../types";
 
 export const makeCohereRequest = async (body: any) => {
   const result = await (
-    await axios.post("http://45.93.201.73/chat", body)
+    await axios.post("http://91.198.220.234/chat", body)
   ).data;
 
   return result;
