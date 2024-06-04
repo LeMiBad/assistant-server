@@ -28,7 +28,8 @@ import {
   deleteChats,
   blockChat,
   getChat,
-  createChat
+  createChat,
+  sendAll
 } from "../controllers/chats";
 
 import { getAllUsers, getAdminToken, updateUser } from "../controllers/admin";
@@ -64,6 +65,7 @@ router.delete("/chats", deleteChats);
 router.post("/chat", getChat);
 router.post("/chat/block", authMiddleware, blockChat);
 router.post("/chat/send", sendChatMessage);
+router.post("/chats/send/all", authMiddleware, sendAll)
 
 // Админка
 router.post("/admin", getAdminToken);

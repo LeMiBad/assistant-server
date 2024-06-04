@@ -4,3 +4,4 @@ export { sendChatMessage } from "./sendChatMessage";
 export { deleteChats } from "./deleteChats";
 export { blockChat } from "./blockChat";
 export { createChat } from "./createChat"
+export { sendAll } from "./sendAll"
