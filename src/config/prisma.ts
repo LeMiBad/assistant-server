@@ -1,23 +1,16 @@
 import { PrismaClient } from "@prisma/client";
 
-const prismaClient = new PrismaClient();
+const prismaClient = new PrismaClient().$extends({
+  query: {
+    $allOperations({ model, operation, args, query }) {
+      if(model === 'Chats' && ['update', 'updateMany'].includes(operation)) {
+        console.log(args.data.updated_at, 77)
+        args.data.updated_at = new Date()
+      }
 
-const updatedAtExtension = {
-  name: 'updatedAtExtension',
-  model: {
-    chats: {
-      $beforeCreate: async (params: any, next: any) => {
-        params.args.data.updated_at = new Date();
-        return next(params);
-      },
-      $beforeUpdate: async (params: any, next: any) => {
-        params.args.data.updated_at = new Date();
-        return next(params);
-      },
+      return query(args)
     },
   },
-};
+});
 
-const prisma = prismaClient.$extends(updatedAtExtension);
-
-export default prisma;
+export default prismaClient;
