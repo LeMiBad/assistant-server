@@ -5,8 +5,7 @@ const prismaClient = new PrismaClient();
 const updatedAtExtension = {
   name: 'updatedAtExtension',
   model: {
-    // Замените 'YourModel' на имя вашей модели
-    YourModel: {
+    chats: {
       $beforeCreate: async (params: any, next: any) => {
         params.args.data.updated_at = new Date();
         return next(params);
