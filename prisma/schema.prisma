@@ -41,7 +41,8 @@ model AssistantSetting {
 
 model Chats {
   id               String   @id
-  created_at       DateTime
+  created_at       DateTime @default(now())
+  updated_at       DateTime @default(now())
   chat_history     Json[]
   target           Json[]
   user_info        Json[]
