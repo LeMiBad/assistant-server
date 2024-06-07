@@ -20,6 +20,8 @@ export const getChats = async (
       where: { assistant_id },
     });
 
+    console.log(chats)
+
     res.status(200).json(chats);
   } catch (error) {
     console.error(error);
