@@ -27,6 +27,13 @@ export const signupController = async (req: Request, res: Response<Data>) => {
         password: hashedPassword,
         created_at: new Date(),
         permits: [],
+        subscription: {
+          tarif: 1,
+          isActive: false,
+          lastActivateDate: new Date(),
+          duration: 20,
+        },
+        check: 0,
       },
     });
 

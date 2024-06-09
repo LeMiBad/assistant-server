@@ -34,6 +34,7 @@ import {
 
 import { getAllUsers, getAdminToken, updateUser } from "../controllers/admin";
 import { getPopupSettings } from "../controllers/popup/getPopupSettings";
+import { activateSubscription } from "../controllers/admin/subscriptions/activateSubscription";
 
 const router = Router();
 
@@ -71,5 +72,6 @@ router.post("/chats/send/all", authMiddleware, sendAll)
 router.post("/admin", getAdminToken);
 router.post("/admin/users", getAllUsers);
 router.patch("/admin/user", updateUser);
+router.post("/admin/subscription", activateSubscription);
 
 export default router;

@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
-const prismaClient = new PrismaClient().$extends({
+const prisma = new PrismaClient().$extends({
   query: {
     $allOperations({ model, operation, args, query }) {
       if(model === 'Chats' && ['update', 'updateMany'].includes(operation)) {
@@ -13,4 +13,4 @@ const prismaClient = new PrismaClient().$extends({
   },
 });
 
-export default prismaClient;
+export default prisma;

@@ -20,6 +20,8 @@ model User {
   tg_token      String?
   tg            String?
   created_at    DateTime
+  check         Int                @default(0)
+  subscription  Json               @default("{}")
   Popup         Popup[]
 }
 

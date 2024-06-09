@@ -19,6 +19,7 @@ export const updateUser = async (req: Request, res: Response<Data>) => {
       },
       data: {
         permits: updates.permits,
+        check: updates.check
       },
     });
 
