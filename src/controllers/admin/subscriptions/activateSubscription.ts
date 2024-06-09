@@ -8,9 +8,9 @@ type Data = User | { message: string };
 
 const subscriptionTarifsMap = {
   1: { label: "AI-Free", price: 0, value: 1 },
-  2: { label: "AI-Старт", price: 7999, value: 2 },
-  3: { label: "AI-Специалист", price: 15999, value: 3 },
-  4: { label: "AI-Профессионал", price: 42300, value: 4 },
+  2: { label: "AI-Старт", price: 7_999, value: 2 },
+  3: { label: "AI-Специалист", price: 15_999, value: 3 },
+  4: { label: "AI-Профессионал", price: 42_300, value: 4 },
 };
 
 export const activateSubscription = async (
