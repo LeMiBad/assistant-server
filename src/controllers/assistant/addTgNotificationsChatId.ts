@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ADMIN_SERVER_SECRET } from "../../constants";
+import { ADMIN_SECRET } from "../../constants";
 import prisma from "../../config/prisma";
 
 type Data = string | { message: string };
@@ -8,7 +8,7 @@ export const addTgNotificationsChatId = async (req: Request, res: Response<Data>
   try {
     const { chat_id, secret, assistant_id } = req.body;
 
-    if (secret !== ADMIN_SERVER_SECRET) {
+    if (secret !== ADMIN_SECRET) {
       return res.status(403).json({ message: "Неверный секрет" });
     }
 
