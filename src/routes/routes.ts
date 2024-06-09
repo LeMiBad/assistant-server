@@ -50,7 +50,7 @@ router.post("/users/signup", signupController);
 router.get("/assistant", authMiddleware, getAssistantSettings);
 router.post("/assistant", authMiddleware, createAssistant);
 router.patch("/assistant", authMiddleware, updateAssistant);
-router.patch("/assistant/tg/notification", addTgNotificationsChatId);
+router.post("/assistant/tg/notification", addTgNotificationsChatId);
 
 // Попап
 router.get("/popup", getPopup);
