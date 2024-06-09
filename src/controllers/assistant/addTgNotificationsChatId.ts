@@ -18,14 +18,16 @@ export const addTgNotificationsChatId = async (req: Request, res: Response<Data>
       }
     })
 
-    await prisma.assistantSetting.update({
-      where: {
-        id: assistant_id
-      },
-      data: {
-        tg_notifications_chat_ids: [...assistant?.tg_notifications_chat_ids!, chat_id]
-      }
-    })
+    if(!assistant?.tg_notifications_chat_ids.includes(chat_id)) {
+      await prisma.assistantSetting.update({
+        where: {
+          id: assistant_id
+        },
+        data: {
+          tg_notifications_chat_ids: [...assistant?.tg_notifications_chat_ids!, chat_id]
+        }
+      })
+    }
 
     res.status(200).json(chat_id);
   } catch (error) {

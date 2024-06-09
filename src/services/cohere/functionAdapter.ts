@@ -7,28 +7,30 @@ import { setTarget } from "./callFunctions/setTarget";
 export const functionsAdapter = async (
   chat: Chats,
   cohereAnswer: any,
-  cohereBody: any
+  cohereBody: any,
 ) => {
-  const toolResults: ToolResult[] = [];
+  const userInfoParametrs = cohereAnswer.tool_calls
+    .filter((call: any) => call.name === "setUserInfo")
+    .map((call: any) => call.parameters);
 
-  if (cohereAnswer.tool_calls) {
-    for (let call of cohereAnswer.tool_calls) {
-      if (call.name === "setUserInfo") {
-        await setUserInfo(chat, call.parameters as any);
-      } else if (call.name === "setTarget") {
-        await setTarget(chat, call.parameters as any);
-      }
+  const userTargetParametrs = cohereAnswer.tool_calls
+    .filter((call: any) => call.name === "setTarget")
+    .map((call: any) => call.parameters);
 
-      toolResults.push({
-        call,
-        outputs: [
-          {
-            status: "ok",
-          },
-        ],
-      });
-    }
+
+  if(userTargetParametrs.length) {
+    await setTarget(chat, userTargetParametrs as any);
+
+  } else if (userInfoParametrs.length) {
+    await setUserInfo(chat, userInfoParametrs as any);
   }
+    
+  const toolResults: ToolResult[] = cohereAnswer.tool_calls.map(
+    (call: any) => ({
+      call,
+      outputs: [{ status: "ok" }],
+    }),
+  );
 
   const finishAnswer = await makeCohereRequest({
     ...cohereBody,

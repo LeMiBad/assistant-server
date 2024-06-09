@@ -8,10 +8,7 @@ interface Info {
   value: string;
 }
 
-const sendTgNotification = async (chat: Chats, info: Info) => {
-  //@ts-expect-error
-  const userName = chat?.user_info?.find(info => info?.type === 'name')?.value ?? chat.id
-
+const sendTgNotification = async (chat: Chats, info: Info[]) => {
   const assistant = await prisma.assistantSetting.findFirst({
     where: {
       id: chat.assistant_id
@@ -26,14 +23,18 @@ const sendTgNotification = async (chat: Chats, info: Info) => {
     },
   })
 
-  const message = `Пользователь ${userName} поделился данными \n ${info.type}: ${info.value} \n https://ai-tools-tech.ru/ru/consultant?chat_id=${chat.id}`
+  const infosString = info.map(({type, value}) => `${type}: ${value}`).join('\n')
+
+  const message = `Пользователь поделился данными 📔 \n\n${infosString}\n\nВ чате: https://ai-tools-tech.ru/ru/consultant?chat_id=${chat.id}`
   
+  console.log(ids, 999442)
   for(let tg_chat_id of ids) {
-    await TgApi.send({ chat_id: tg_chat_id, content: message, bot_id: user?.tg_token ?? "" })
+    console.log(+tg_chat_id)
+    TgApi.send({ chat_id: tg_chat_id, content: message, bot_id: user?.tg_token ?? "" })
   }
 }
 
-export const setUserInfo = async (chat: Chats, info: Info) => {
+export const setUserInfo = async (chat: Chats, info: Info[]) => {
   sendTgNotification(chat, info)
 
   await prisma.chats.update({
@@ -41,7 +42,7 @@ export const setUserInfo = async (chat: Chats, info: Info) => {
       id: chat.id,
     },
     data: {
-      user_info: [...chat.user_info, info] as any,
+      user_info: [...chat.user_info, ...info] as any,
     },
   });
 };

@@ -26,34 +26,34 @@ model User {
 }
 
 model AssistantSetting {
-  id            String   @id
-  created_at    DateTime
-  name          String
-  role          String
-  org_info      String
-  first_message String?
-  strategy      String
-  target        String
-  model         String
-  user_id       String
-  faq           Json
+  id                        String   @id
+  created_at                DateTime
+  name                      String
+  role                      String
+  org_info                  String
+  first_message             String?
+  strategy                  String
+  target                    String
+  model                     String
+  user_id                   String
+  faq                       Json
   tg_notifications_chat_ids String[] @default([])
-  user          User     @relation(fields: [user_id], references: [id])
-  files         Files[]
+  user                      User     @relation(fields: [user_id], references: [id])
+  files                     Files[]
 }
 
 model Chats {
   id               String   @id
   created_at       DateTime @default(now())
   updated_at       DateTime @default(now())
-  chat_history     Json[]
-  target           Json[]
-  user_info        Json[]
+  chat_history     Json[]   @default([])
+  target           Json[]   @default([])
+  user_info        Json[]   @default([])
   integration_type String
   User             User?    @relation(fields: [user_id], references: [id])
   user_id          String?
   assistant_id     String
-  is_blocked       Boolean
+  is_blocked       Boolean  @default(false)
 }
 
 model Popup {

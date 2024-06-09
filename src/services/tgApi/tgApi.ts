@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const host = "http://localhost:3000/api/";
 const host = "http://213.171.10.159/api/";
+// const host = "http://localhost:8000/api/";
 
 export interface SendTgMessageProps {
   bot_id: string;

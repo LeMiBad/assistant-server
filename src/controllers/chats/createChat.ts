@@ -26,12 +26,8 @@ export const createChat = async (req: Request, res: Response<Data>) => {
       data: {
         id: newChatId,
         user_id: assistant?.user_id,
-        chat_history: [],
-        target: [],
-        user_info: [],
         created_at: new Date(),
         assistant_id,
-        is_blocked: false,
         integration_type: integration_type ?? "browser",
       },
     }
