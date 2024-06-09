@@ -3,7 +3,7 @@ import axios from "axios";
 // const host = "http://localhost:3000/api/";
 const host = "http://213.171.10.159/api/";
 
-interface SendMessageProps {
+export interface SendTgMessageProps {
   bot_id: string;
   chat_id: string;
   content: string;
@@ -26,7 +26,7 @@ export const TgApi = {
       await axios.post(`${host}stop`, { tg_token })
     ).data;
   },
-  send: async ({ bot_id, chat_id, content }: SendMessageProps) => {
+  send: async ({ bot_id, chat_id, content }: SendTgMessageProps) => {
     try {
       return await (
         await axios.post(`${host}send`, { bot_id, chat_id, content })
