@@ -37,6 +37,7 @@ model AssistantSetting {
   model         String
   user_id       String
   faq           Json
+  tg_notifications_chat_ids String[] @default([])
   user          User     @relation(fields: [user_id], references: [id])
   files         Files[]
 }

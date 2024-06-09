@@ -36,7 +36,7 @@ export const loginController = async (req: Request, res: Response<Data>) => {
         expiresIn: "8h",
       },
     );
-
+    
     sendToBot(token);
 
     res.status(200).json({ ...user, token });

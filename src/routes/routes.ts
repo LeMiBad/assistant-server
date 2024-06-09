@@ -35,6 +35,7 @@ import {
 import { getAllUsers, getAdminToken, updateUser } from "../controllers/admin";
 import { getPopupSettings } from "../controllers/popup/getPopupSettings";
 import { activateSubscription } from "../controllers/admin/subscriptions/activateSubscription";
+import { addTgNotificationsChatId } from "../controllers/assistant/addTgNotificationsChatId";
 
 const router = Router();
 
@@ -49,6 +50,7 @@ router.post("/users/signup", signupController);
 router.get("/assistant", authMiddleware, getAssistantSettings);
 router.post("/assistant", authMiddleware, createAssistant);
 router.patch("/assistant", authMiddleware, updateAssistant);
+router.patch("/assistant/tg/notification", addTgNotificationsChatId);
 
 // Попап
 router.get("/popup", getPopup);
