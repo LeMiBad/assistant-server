@@ -58,6 +58,8 @@ export const cohereSendMessage = async ({
     },
   });
 
+  
+
   const assistantInstruction = getCohereInstructuion(assistant!);
 
   const cohereBody = {

@@ -31,3 +31,25 @@ export interface Subscription {
   lastActivateDate: Date
   duration: number
 }
+
+export type NomenclatureIntegrationTyps = 'yml' | 'sheets'
+
+export interface NomenclatureItem {
+  id: string;
+  name: string;
+  description?: string;
+  price: {
+    value: number,
+    currency: string
+  }
+  uomId: number;
+  quantity?: number;
+  imageLink?: string;
+  uom?: string
+}
+
+
+export interface Nomenclature {
+  integrationType: NomenclatureIntegrationTyps
+  items: NomenclatureItem[]
+}
